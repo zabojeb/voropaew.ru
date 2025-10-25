@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>404 — voropaew</title>
+
+    <!-- Noto Sans Regular -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --message-size-mobile: 32px;
+        --message-size-desktop: 48px;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
+        color: #000;
+        font-family: "Noto Sans", system-ui, -apple-system, Segoe UI, Roboto,
+          Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      main {
+        width: min(560px, 90vw);
+        text-align: center;
+        padding: 48px 24px;
+      }
+      .error-code {
+        margin: 0 0 32px;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 128px;
+        line-height: 1;
+      }
+      .message {
+        margin: 0 0 40px;
+        font-size: var(--message-size-mobile);
+        line-height: 1.25;
+      }
+      .home-link {
+        font-size: var(--message-size-mobile);
+        color: inherit;
+        text-decoration: underline;
+        text-underline-offset: 6px;
+      }
+      @media (min-width: 768px) {
+        .message,
+        .home-link {
+          font-size: var(--message-size-desktop);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="error-code">404</p>
+      <p class="message">idk what are you searching for but it's definitely not here</p>
+      <a class="home-link" href="index.html">go home</a>
+    </main>
+  </body>
+</html>

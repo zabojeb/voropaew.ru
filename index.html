@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>voropaew — home</title>
+
+    <!-- Noto Sans Regular -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --base-w: 1280;
+        --base-h: 832;
+        --nav-font-desktop: 48px;
+        --nav-underline-thickness: 2px;
+        --nav-underline-offset: 6px;
+        --bg-pad-x: 16px;
+        --bg-pad-y: 10px;
+        --bg-radius: 2px;
+        --anim: 180ms cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+      body {
+        margin: 0;
+        background: #fff;
+        color: #000;
+        font-family: "Noto Sans", system-ui, -apple-system, Segoe UI, Roboto,
+          Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      .stage {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+      }
+      .artboard {
+        position: relative;
+        width: min(100vw, calc(100vh * (1280 / 832)));
+        aspect-ratio: 1280/832;
+        overflow: visible;
+      }
+      .logo {
+        position: absolute;
+        left: 0;
+        top: calc(321 / var(--base-h) * 100%);
+        width: 100%;
+        height: auto;
+        display: block;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      .navlink {
+        position: absolute;
+        display: inline-block;
+        line-height: 1;
+        font-size: clamp(24px, 3.75vw, var(--nav-font-desktop));
+        text-decoration: underline;
+        text-decoration-thickness: var(--nav-underline-thickness);
+        text-underline-offset: var(--nav-underline-offset);
+        color: #000;
+        cursor: pointer;
+        isolation: isolate;
+      }
+      .navlink::before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        left: calc(var(--bg-pad-x) * -1);
+        right: calc(var(--bg-pad-x) * -1);
+        top: calc(var(--bg-pad-y) * -1);
+        bottom: calc(var(--bg-pad-y) * -1);
+        background: #000;
+        border-radius: var(--bg-radius);
+        opacity: 0;
+        transform: scale(0.96);
+        transform-origin: center;
+        transition: opacity var(--anim), transform var(--anim);
+      }
+      .navlink:hover,
+      .navlink:focus-visible {
+        color: #fff;
+        outline: none;
+      }
+      .navlink:hover::before,
+      .navlink:focus-visible::before {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .research {
+        left: calc(457 / var(--base-w) * 100%);
+        top: calc(118 / var(--base-h) * 100%);
+      }
+      .whoami {
+        left: calc(984 / var(--base-w) * 100%);
+        top: calc(118 / var(--base-h) * 100%);
+      }
+      .vision {
+        left: calc(177 / var(--base-w) * 100%);
+        top: calc(688 / var(--base-h) * 100%);
+      }
+      .portfolio {
+        left: calc(728 / var(--base-w) * 100%);
+        top: calc(688 / var(--base-h) * 100%);
+      }
+
+      @media (max-width: 600px) {
+        .logo {
+          top: calc(321 / 832 * 100%);
+          width: 92%;
+          left: 4%;
+        }
+        .research {
+          left: calc(157 / var(--base-w) * 100%);
+          top: calc(-250 / var(--base-h) * 100%);
+        }
+        .whoami {
+          left: calc(784 / var(--base-w) * 100%);
+          top: calc(-50 / var(--base-h) * 100%);
+        }
+        .vision {
+          left: calc(177 / var(--base-w) * 100%);
+          top: calc(800 / var(--base-h) * 100%);
+        }
+        .portfolio {
+          left: calc(728 / var(--base-w) * 100%);
+          top: calc(1000 / var(--base-h) * 100%);
+        }
+        :root {
+          --bg-pad-x: 12px;
+          --bg-pad-y: 8px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .navlink::before {
+          transition: none;
+        }
+        .logo [filter] {
+          filter: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stage">
+      <main class="artboard" aria-label="voropaew — home">
+        <!-- TOP -->
+        <a class="navlink research" href="#research" aria-label="research"
+          >research</a
+        >
+        <a class="navlink whoami" href="#whoami" aria-label="whoami">whoami</a>
+
+        <!-- LOGO (inline SVG with stable turbulence; high filterRes to avoid shimmer) -->
+        <svg
+          class="logo"
+          viewBox="0 0 1280 300"
+          role="img"
+          aria-label="voropaew"
+        >
+          <defs>
+            <filter
+              id="warp"
+              x="-5%"
+              y="-20%"
+              width="110%"
+              height="140%"
+              filterUnits="objectBoundingBox"
+              color-interpolation-filters="sRGB"
+              filterRes="1600"
+            >
+              <feTurbulence
+                type="fractalNoise"
+                baseFrequency="0.004"
+                numOctaves="2"
+                seed="3"
+                stitchTiles="stitch"
+                result="turb"
+              />
+              <!-- лёгкое сглаживание шума, чтобы не «пилить» края -->
+              <feGaussianBlur
+                in="turb"
+                stdDeviation="0.35"
+                edgeMode="none"
+                result="turbSoft"
+              />
+              <feDisplacementMap
+                in="SourceGraphic"
+                in2="turbSoft"
+                scale="0"
+                xChannelSelector="R"
+                yChannelSelector="G"
+              />
+            </filter>
+          </defs>
+          <image
+            href="assets/voropaew.svg"
+            xlink:href="assets/voropaew.svg"
+            x="0"
+            y="0"
+            width="100%"
+            height="100%"
+            preserveAspectRatio="xMinYMid meet"
+            filter="url(#warp)"
+          />
+        </svg>
+        <noscript
+          ><img class="logo" src="assets/voropaew.svg" alt="voropaew"
+        /></noscript>
+
+        <!-- BOTTOM -->
+        <a class="navlink vision" href="#vision" aria-label="vision">vision</a>
+        <a class="navlink portfolio" href="#portfolio" aria-label="portfolio"
+          >portfolio</a
+        >
+      </main>
+    </div>
+
+    <script>
+      // Сложная, но лёгкая по CPU функция силы дисторсии + плавность через «пружину».
+      (function () {
+        const art = document.querySelector(".artboard");
+        const svg = document.querySelector(".logo");
+        if (!art || !svg) return;
+
+        const disp = svg.querySelector("feDisplacementMap");
+        // turbulence фиксирован, чтобы не мигать текстуру
+        let t = 0;
+        let value = 0,
+          vel = 0; // пружина
+        const k = 0.12,
+          damping = 0.82; // жёсткость/демпфирование
+
+        // якоря — центры ссылок (пересчитываем при resize)
+        let anchors = [];
+        function measureAnchors() {
+          const rectA = art.getBoundingClientRect();
+          const to01 = (x, y) => ({
+            x: (x - rectA.left) / rectA.width,
+            y: (y - rectA.top) / rectA.height,
+          });
+          anchors = Array.from(document.querySelectorAll(".navlink")).map(
+            (el) => {
+              const r = el.getBoundingClientRect();
+              return to01(r.left + r.width / 2, r.top + r.height / 2);
+            }
+          );
+        }
+        measureAnchors();
+        window.addEventListener("resize", measureAnchors);
+
+        // курсор
+        let px = 0.5,
+          py = 0.5,
+          lastX = 0.5,
+          lastY = 0.5,
+          speed = 0;
+        function onMove(e) {
+          const r = art.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width;
+          const y = (e.clientY - r.top) / r.height;
+          // ограничим в [0,1]
+          px = Math.max(0, Math.min(1, x));
+          py = Math.max(0, Math.min(1, y));
+        }
+        art.addEventListener("pointermove", onMove, { passive: true });
+        art.addEventListener("pointerenter", onMove, { passive: true });
+        art.addEventListener(
+          "pointerleave",
+          () => {
+            px = 0.5;
+            py = 0.5;
+          },
+          { passive: true }
+        );
+
+        function clamp(v, a, b) {
+          return v < a ? a : v > b ? b : v;
+        }
+
+        function tick() {
+          // скорость курсора (нормированная), сглаженная
+          const dx = px - lastX,
+            dy = py - lastY;
+          const instSpeed = Math.min(1, Math.hypot(dx, dy) * 6); // 0..1
+          speed = speed * 0.85 + instSpeed * 0.15;
+          lastX = px;
+          lastY = py;
+
+          // время
+          t += 0.016;
+
+          // --- Компоненты поля ---
+          // 1) дыхание — мягкий базовый пульс
+          const breath = 4 + 3 * Math.sin(t * 0.9);
+
+          // 2) эллиптическая «даль» от центра (x растянут по отношению к y как 1280/832)
+          const ax = 1.0,
+            ay = 1.2;
+          const cx = px - 0.5,
+            cy = py - 0.5;
+          const r = Math.hypot(cx * ax, cy * ay); // ~0..0.8
+          const radial = 1 - Math.exp(-Math.pow(r / 0.5, 2)); // 0..~1
+
+          // 3) близость к ссылкам — сумма гауссиан; усиливает эффект возле нав-узлов
+          let anchorBoost = 0;
+          const sigma = 0.18;
+          for (const a of anchors) {
+            const d = Math.hypot(px - a.x, py - a.y);
+            anchorBoost += Math.exp(-(d * d) / (2 * sigma * sigma)); // 0..1 для каждой
+          }
+          anchorBoost = Math.min(1.6, anchorBoost); // нормировка
+
+          // 4) «волна» от движения — затухающая синусоида по расстоянию + скорость курсора
+          const ripple =
+            Math.sin(r * 12 - t * 4) * Math.exp(-r * 3) * (speed * 1.6);
+
+          // Сумма с весами → целевая сила
+          const target =
+            8 + breath * 1.0 + radial * 22 + anchorBoost * 16 + ripple * 14;
+
+          // Пружинная аппроксимация к целевому значению (без рывков)
+          vel += (target - value) * k;
+          vel *= damping;
+          value += vel;
+
+          // Ограничения и запись в фильтр
+          const scale = clamp(value, 0, 52);
+          disp.setAttribute("scale", scale.toFixed(2));
+
+          requestAnimationFrame(tick);
+        }
+        tick();
+      })();
+    </script>
+  </body>
+</html>
