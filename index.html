@@ -25,7 +25,11 @@
       }
       body {
         margin: 0;
-        background: #fff;
+        background-color: #fff;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
         color: #000;
         font-family: "Noto Sans", system-ui, -apple-system, Segoe UI, Roboto,
           Arial, sans-serif;
@@ -86,6 +90,7 @@
       .navlink:focus-visible {
         color: #fff;
         outline: none;
+        text-decoration: none;
       }
       .navlink:hover::before,
       .navlink:focus-visible::before {
@@ -148,7 +153,10 @@
       }
     </style>
   </head>
-  <body>
+  <body
+    data-backgrounds="back_1.svg back_2.svg back_3.svg back_4.svg back_5.svg back_6.svg"
+    data-background-path="assets/backgrounds"
+  >
     <div class="stage">
       <main class="artboard" aria-label="voropaew — home">
         <!-- TOP -->
@@ -222,6 +230,21 @@
       </main>
     </div>
 
+    <script>
+      (function setRandomBackground() {
+        const body = document.body;
+        if (!body) return;
+        const files = (body.dataset.backgrounds || "")
+          .split(/\s+/)
+          .map((file) => file.trim())
+          .filter(Boolean);
+        if (!files.length) return;
+        const path = (body.dataset.backgroundPath || "").trim();
+        const basePath = path ? path.replace(/\/?$/, "/") : "";
+        const choice = files[Math.floor(Math.random() * files.length)];
+        body.style.backgroundImage = `url('${basePath}${choice}')`;
+      })();
+    </script>
     <script>
       // Сложная, но лёгкая по CPU функция силы дисторсии + плавность через «пружину».
       (function () {
