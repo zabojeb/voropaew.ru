@@ -37,6 +37,55 @@
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
       }
+      .cursor {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 0;
+        height: 0;
+        pointer-events: none;
+        z-index: 1000;
+        opacity: 0;
+        transition: opacity 160ms ease;
+        mix-blend-mode: normal;
+        color: #111;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 64px;
+        line-height: 1;
+        font-weight: 400;
+      }
+      .cursor-lines {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 999;
+      }
+      .cursor-lines line {
+        stroke: #000;
+        stroke-width: 1.5;
+        vector-effect: non-scaling-stroke;
+        opacity: 0;
+        transition: opacity 120ms ease;
+      }
+      .cursor__glyph {
+        position: absolute;
+        left: 0;
+        top: 0;
+        transform: translate(-50%, -50%);
+        will-change: transform;
+        text-rendering: optimizeLegibility;
+      }
+      .cursor--visible {
+        opacity: 1;
+      }
+      .cursor--link {
+        font-weight: 600;
+      }
+      .cursor--pressed .cursor__glyph {
+        transform: translate(-50%, -50%) scale(0.9);
+      }
       .stage {
         position: fixed;
         inset: 0;
@@ -71,6 +120,19 @@
         color: #000;
         cursor: pointer;
         isolation: isolate;
+      }
+      @media (pointer: fine) {
+        html,
+        body,
+        a,
+        button,
+        .navlink,
+        [role="button"],
+        input,
+        select,
+        textarea {
+          cursor: none !important;
+        }
       }
       .navlink::before {
         content: "";
@@ -154,10 +216,7 @@
       }
     </style>
   </head>
-  <body
-    data-backgrounds="back_1.svg back_2.svg back_3.svg back_4.svg back_5.svg back_6.svg back_7.svg"
-    data-background-path="assets/backgrounds"
-  >
+  <body>
     <div class="stage">
       <main class="artboard" aria-label="voropaew — home">
         <!-- TOP -->
@@ -231,21 +290,6 @@
       </main>
     </div>
 
-    <script>
-      (function setRandomBackground() {
-        const body = document.body;
-        if (!body) return;
-        const files = (body.dataset.backgrounds || "")
-          .split(/\s+/)
-          .map((file) => file.trim())
-          .filter(Boolean);
-        if (!files.length) return;
-        const path = (body.dataset.backgroundPath || "").trim();
-        const basePath = path ? path.replace(/\/?$/, "/") : "";
-        const choice = files[Math.floor(Math.random() * files.length)];
-        body.style.backgroundImage = `url('${basePath}${choice}')`;
-      })();
-    </script>
     <script>
       // Сложная, но лёгкая по CPU функция силы дисторсии + плавность через «пружину».
       (function () {
@@ -361,6 +405,171 @@
           requestAnimationFrame(tick);
         }
         tick();
+      })();
+    </script>
+    <script>
+      // Минималистичный кастомный курсор-буква с линиями к навигации.
+      (function () {
+        const finePointer = window.matchMedia("(pointer: fine)");
+        if (!finePointer.matches) return;
+
+        const cursor = document.createElement("div");
+        cursor.className = "cursor";
+        cursor.innerHTML =
+          '<span class="cursor__glyph" aria-hidden="true">y</span>';
+        document.body.appendChild(cursor);
+
+        const svgNS = "http://www.w3.org/2000/svg";
+        const lineLayer = document.createElementNS(svgNS, "svg");
+        lineLayer.classList.add("cursor-lines");
+        document.body.appendChild(lineLayer);
+
+        const navLinks = Array.from(document.querySelectorAll(".navlink"));
+        const lines = navLinks.map(() => {
+          const line = document.createElementNS(svgNS, "line");
+          lineLayer.appendChild(line);
+          return line;
+        });
+
+        const interactiveSelector =
+          ".navlink, a[href], button, [role='button'], [data-cursor='link']";
+        let currentX = window.innerWidth / 2;
+        let currentY = window.innerHeight / 2;
+        let navPoints = [];
+        const lineOffset = { x: 0, y: 0 };
+
+        function resizeLineLayer() {
+          const w = window.innerWidth;
+          const h = window.innerHeight;
+          lineLayer.setAttribute("width", w);
+          lineLayer.setAttribute("height", h);
+          lineLayer.setAttribute("viewBox", `0 0 ${w} ${h}`);
+        }
+
+        function updateLineOffset() {
+          const size = parseFloat(getComputedStyle(cursor).fontSize) || 0;
+          lineOffset.x = -size * 0.01;
+          lineOffset.y = size * 0.25;
+        }
+
+        function updateNavPoints() {
+          navPoints = navLinks.map((link) => {
+            const rect = link.getBoundingClientRect();
+            return {
+              x: rect.left + rect.width / 2,
+              y: rect.bottom + 2,
+            };
+          });
+        }
+
+        function drawLines(x, y) {
+          const toX = x + lineOffset.x;
+          const toY = y + lineOffset.y;
+          lines.forEach((line, idx) => {
+            const anchor = navPoints[idx];
+            if (!anchor) return;
+            line.setAttribute("x1", anchor.x);
+            line.setAttribute("y1", anchor.y);
+            line.setAttribute("x2", toX);
+            line.setAttribute("y2", toY);
+          });
+        }
+
+        function setLinesVisible(visible) {
+          lines.forEach((line) => {
+            line.style.opacity = visible ? "1" : "0";
+          });
+        }
+
+        function updateInteractive(node) {
+          const el = node && node.closest ? node.closest(interactiveSelector) : null;
+          const active = Boolean(el);
+          cursor.classList.toggle("cursor--link", active);
+        }
+
+        function updateVisibility(visible) {
+          cursor.classList.toggle("cursor--visible", visible);
+          setLinesVisible(visible);
+        }
+
+        function movePointer(x, y) {
+          currentX = x;
+          currentY = y;
+          cursor.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+          drawLines(currentX, currentY);
+        }
+
+        function refreshLineGeometry() {
+          resizeLineLayer();
+          updateLineOffset();
+          updateNavPoints();
+          drawLines(currentX, currentY);
+        }
+
+        const hideCursor = () => {
+          updateVisibility(false);
+          cursor.classList.remove("cursor--link", "cursor--pressed");
+        };
+
+        movePointer(currentX, currentY);
+        refreshLineGeometry();
+
+        document.addEventListener(
+          "pointermove",
+          (event) => {
+            if (
+              event.pointerType &&
+              event.pointerType !== "mouse" &&
+              event.pointerType !== "pen"
+            ) {
+              return;
+            }
+            movePointer(event.clientX, event.clientY);
+            updateVisibility(true);
+            updateInteractive(event.target);
+          },
+          { passive: true }
+        );
+
+        document.addEventListener("pointerdown", () => {
+          cursor.classList.add("cursor--pressed");
+        });
+        document.addEventListener("pointerup", () => {
+          cursor.classList.remove("cursor--pressed");
+        });
+
+        document.addEventListener(
+          "pointerover",
+          (event) => {
+            updateInteractive(event.target);
+          },
+          true
+        );
+
+        document.addEventListener(
+          "pointerout",
+          (event) => {
+            const next = event.relatedTarget;
+            if (!next || next.nodeType !== 1) {
+              cursor.classList.remove("cursor--link");
+              return;
+            }
+            updateInteractive(next);
+          },
+          true
+        );
+
+        document.addEventListener("pointerleave", hideCursor);
+        document.addEventListener("pointercancel", hideCursor);
+        window.addEventListener("blur", hideCursor);
+        window.addEventListener("resize", refreshLineGeometry);
+
+        finePointer.addEventListener?.("change", (event) => {
+          if (!event.matches) {
+            cursor.remove();
+            lineLayer.remove();
+          }
+        });
       })();
     </script>
   </body>
