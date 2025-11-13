@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HOW TO ANTI-DESIGN THINGS</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: #fff;
+        color: #000;
+        font-family: "Noto Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        padding: 0;
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0;
+        padding: 0;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: "Times New Roman", Times, serif;
+        font-weight: bold;
+        line-height: 1.1;
+      }
+
+      h1 {
+        font-size: 120px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        opacity: 0.08;
+        width: 100%;
+        text-align: center;
+        pointer-events: none;
+      }
+
+      .actual-title {
+        font-size: 56px;
+        writing-mode: vertical-rl;
+        position: fixed;
+        right: 20px;
+        top: 100px;
+        border: 12px solid #000;
+        padding: 40px 20px;
+        background: #fff;
+        z-index: 100;
+      }
+
+      h2 {
+        font-size: 48px;
+        margin: 0 0 30px 0;
+        display: inline;
+        background: #000;
+        color: #fff;
+        padding: 10px 20px;
+        line-height: 2;
+      }
+
+      h3 {
+        font-size: 28px;
+        font-style: italic;
+        margin: 0;
+        display: inline-block;
+      }
+
+      p {
+        margin: 0 0 20px 0;
+        max-width: 650px;
+      }
+
+      .content-wrapper {
+        margin-left: 80px;
+        padding: 40px;
+        position: relative;
+      }
+
+      .intro {
+        font-size: 22px;
+        max-width: 500px;
+        border-top: 20px solid #000;
+        border-bottom: 20px solid #000;
+        padding: 40px 0;
+        margin: 100px 0 80px 0;
+      }
+
+      strong {
+        font-weight: bold;
+        position: relative;
+      }
+
+      strong::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 8px;
+        background: #000;
+        z-index: -1;
+      }
+
+      em {
+        font-style: italic;
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+      }
+
+      u {
+        text-decoration: none;
+        border-bottom: 5px double #000;
+        padding-bottom: 2px;
+      }
+
+      a {
+        color: #000;
+        text-decoration: none;
+        border-bottom: 4px solid #000;
+        font-weight: bold;
+      }
+
+      a:hover {
+        background: #000;
+        color: #fff;
+      }
+
+      ul {
+        margin: 40px 0;
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+        max-width: 800px;
+      }
+
+      li {
+        border: 4px solid #000;
+        padding: 20px;
+        position: relative;
+      }
+
+      li::before {
+        content: attr(data-num);
+        position: absolute;
+        top: -20px;
+        left: -20px;
+        background: #000;
+        color: #fff;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 20px;
+      }
+
+      .back-link {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        font-size: 14px;
+        border: 3px solid #000;
+        padding: 15px 25px;
+        text-decoration: none;
+        color: #000;
+        font-weight: bold;
+        background: #fff;
+        z-index: 101;
+        writing-mode: horizontal-tb;
+      }
+
+      .back-link:hover {
+        background: #000;
+        color: #fff;
+      }
+
+      .manifesto {
+        max-width: 900px;
+        margin: 100px 0 100px 200px;
+        position: relative;
+      }
+
+      .manifesto h3 {
+        font-size: 42px;
+        margin-bottom: 50px;
+        text-decoration: underline;
+        text-decoration-thickness: 6px;
+      }
+
+      .manifesto p {
+        font-size: 18px;
+        margin-bottom: 40px;
+        padding-left: 60px;
+        border-left: 15px solid #000;
+        max-width: 100%;
+      }
+
+      .manifesto strong {
+        font-size: 24px;
+      }
+
+      .section {
+        margin: 150px 0;
+        position: relative;
+      }
+
+      .section-1 {
+        margin-left: 0;
+      }
+
+      .section-2 {
+        margin-left: 150px;
+      }
+
+      .section-3 {
+        margin-left: 300px;
+      }
+
+      .section-4 {
+        margin-left: 100px;
+      }
+
+      .visual-element {
+        position: fixed;
+        font-size: 300px;
+        font-weight: bold;
+        font-family: "Times New Roman", serif;
+        z-index: 0;
+        opacity: 0.02;
+      }
+
+      .v1 {
+        top: 20%;
+        left: -100px;
+        transform: rotate(-45deg);
+      }
+      .v2 {
+        top: 50%;
+        right: -150px;
+        transform: rotate(30deg);
+      }
+      .v3 {
+        bottom: 10%;
+        left: 10%;
+        transform: rotate(-20deg);
+      }
+
+      .highlight-box {
+        background: #000;
+        color: #fff;
+        padding: 30px;
+        margin: 50px 0 50px -80px;
+        max-width: 700px;
+        font-size: 18px;
+      }
+
+      .highlight-box strong::after {
+        background: #fff;
+      }
+
+      .types-container {
+        display: flex;
+        gap: 100px;
+        margin: 80px 0;
+      }
+
+      .type-box {
+        flex: 1;
+      }
+
+      .type-box:first-child {
+        margin-top: 100px;
+      }
+
+      .type-box h3 {
+        font-size: 36px;
+        margin-bottom: 20px;
+        border-bottom: 8px solid #000;
+        padding-bottom: 10px;
+      }
+
+      .examples-section {
+        margin: 150px 0 150px 250px;
+      }
+
+      .site-example {
+        margin: 60px 0;
+        max-width: 600px;
+      }
+
+      .site-example:nth-child(odd) {
+        margin-left: -100px;
+      }
+
+      .site-example:nth-child(even) {
+        margin-left: 80px;
+      }
+
+      .site-example p {
+        border-top: 10px solid #000;
+        padding-top: 20px;
+        position: relative;
+      }
+
+      .site-example p::before {
+        content: "→";
+        position: absolute;
+        left: -40px;
+        top: -10px;
+        font-size: 50px;
+      }
+
+      .examples-section h3 {
+        font-size: 40px;
+        margin: 80px 0 40px 0;
+        transform: rotate(-3deg);
+        display: block;
+      }
+
+      blockquote {
+        font-size: 32px;
+        font-family: "Times New Roman", serif;
+        font-style: italic;
+        margin: 100px auto;
+        max-width: 700px;
+        padding: 60px;
+        border: 15px solid #000;
+        text-align: center;
+        line-height: 1.4;
+      }
+
+      blockquote::before,
+      blockquote::after {
+        content: '"';
+        font-size: 100px;
+        line-height: 0;
+        vertical-align: -30px;
+      }
+
+      .conclusion-text {
+        max-width: 650px;
+        margin: 80px 0 80px 180px;
+        font-size: 18px;
+      }
+
+      .footer-statement {
+        position: relative;
+        margin: 150px 0 100px 0;
+        padding: 80px;
+        background: #000;
+        color: #fff;
+        font-size: 48px;
+        font-family: "Times New Roman", serif;
+        font-weight: bold;
+        text-align: center;
+        line-height: 1.6;
+      }
+
+      .noise-bar {
+        position: fixed;
+        width: 30px;
+        height: 100vh;
+        background: repeating-linear-gradient(
+          0deg,
+          #000,
+          #000 10px,
+          transparent 10px,
+          transparent 20px
+        );
+        top: 0;
+        left: 0;
+        opacity: 0.05;
+        z-index: 0;
+      }
+
+      .scatter-text {
+        position: absolute;
+        font-size: 14px;
+        opacity: 0.3;
+        transform: rotate(-90deg);
+        font-weight: bold;
+      }
+
+      /* PERCEPTION FUNCTION SECTION */
+
+      .perception-section {
+        margin-left: 150px;
+        max-width: 950px;
+      }
+
+      .perception-math {
+        margin: 30px 0 20px 0;
+        padding-left: 40px;
+        border-left: 10px solid #000;
+        font-family: "Times New Roman", serif;
+        font-size: 18px;
+      }
+
+      .perception-math code {
+        font-family: "Times New Roman", serif;
+        font-size: 20px;
+      }
+
+      .perception-grid {
+        margin-top: 40px;
+        display: grid;
+        grid-template-columns: 200px 1fr 1fr;
+        gap: 15px 30px;
+        max-width: 900px;
+        align-items: center;
+      }
+
+      .perception-col-title {
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 14px;
+        letter-spacing: 0.16em;
+        text-align: center;
+      }
+
+      .perception-metric-name {
+        font-size: 14px;
+        font-weight: bold;
+        letter-spacing: 0.12em;
+      }
+
+      .bar {
+        border: 3px solid #000;
+        height: 22px;
+        position: relative;
+        background: #fff;
+        overflow: hidden;
+      }
+
+      .bar-fill {
+        position: absolute;
+        inset: 0;
+        width: 0;
+      }
+
+      .bar-fill.classic {
+        background: #000;
+      }
+
+      .bar-fill.anti {
+        background: repeating-linear-gradient(
+          -45deg,
+          #000,
+          #000 6px,
+          transparent 6px,
+          transparent 12px
+        );
+      }
+
+      .perception-note {
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 25px;
+        opacity: 0.7;
+        max-width: 600px;
+      }
+
+      /* 5 UNWRITTEN RULES */
+
+      .rules-section {
+        margin: 150px 0 100px 180px;
+        max-width: 900px;
+        position: relative;
+      }
+
+      .rules-intro {
+        margin: 30px 0 10px 0;
+        max-width: 600px;
+        border-left: 12px solid #000;
+        padding-left: 30px;
+      }
+
+      .rules-list {
+        list-style: none;
+        margin: 40px 0 0 0;
+        padding: 0;
+        counter-reset: rule;
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+      }
+
+      .rules-list li {
+        counter-increment: rule;
+        border: 4px solid #000;
+        padding: 20px 20px 20px 70px;
+        position: relative;
+        background: #fff;
+      }
+
+      .rules-list li::before {
+        content: counter(rule);
+        position: absolute;
+        top: -4px;
+        left: -4px;
+        width: 40px;
+        height: 40px;
+        background: #000;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 18px;
+      }
+
+      .rule-label {
+        display: block;
+        font-weight: bold;
+        font-size: 18px;
+        margin-bottom: 8px;
+      }
+
+      .rule-text {
+        font-size: 14px;
+        max-width: 100%;
+      }
+
+      @media (max-width: 1024px) {
+        .actual-title {
+          writing-mode: horizontal-tb;
+          position: relative;
+          right: auto;
+          top: auto;
+          font-size: 48px;
+          margin: 80px 20px 60px 20px;
+        }
+
+        .content-wrapper {
+          margin-left: 20px;
+          padding: 20px;
+        }
+
+        .section-1,
+        .section-2,
+        .section-3,
+        .section-4 {
+          margin-left: 0;
+        }
+
+        .manifesto {
+          margin-left: 0;
+        }
+
+        .examples-section {
+          margin-left: 0;
+        }
+
+        ul {
+          grid-template-columns: 1fr;
+        }
+
+        .types-container {
+          flex-direction: column;
+          gap: 40px;
+        }
+
+        .perception-section {
+          margin-left: 0;
+        }
+
+        .rules-section {
+          margin-left: 0;
+        }
+
+        .perception-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="noise-bar"></div>
+    <div class="visual-element v1">×</div>
+    <div class="visual-element v2">≠</div>
+    <div class="visual-element v3">!</div>
+
+    <h1>ANTI-DESIGN</h1>
+
+    <a href="#" class="back-link">← back</a>
+
+    <div class="actual-title">HOW TO ANTI-DESIGN THINGS</div>
+
+    <div class="content-wrapper">
+      <div class="intro">
+        <p>
+          <strong
+            >A design revolution happens when established aesthetics become
+            boring and provoke a rebellious response.</strong
+          >
+          This is how brutalism, web brutalism, neo-brutalism, and anti-design
+          emerged — movements that deliberately violate the canons of
+          "beautiful" design.
+        </p>
+      </div>
+
+      <div class="section section-1">
+        <h2>Brutalism</h2>
+        <span class="scatter-text" style="right: 50px; top: -30px">HONEST</span>
+
+        <p>
+          Brutalism originated in 1950s architecture as <em>"béton brut"</em> —
+          raw concrete, and that's where its name comes from. The first
+          brutalist buildings were monolithic concrete blocks without finishing
+          — rough, simple, functional. The idea was <u>honesty of materials</u>:
+          structures demonstrated their structure and material directly, without
+          embellishment.
+        </p>
+
+        <p>
+          In web design, brutalism manifested as an attempt to give sites a
+          "raw," unpolished look, deliberately opposing itself to glossy web
+          design. Supporters of the style value it for its
+          <strong>boldness and honesty</strong> — they want the Internet to look
+          truthful, "as is," without gloss and wrappers.
+        </p>
+
+        <div class="highlight-box">
+          <p>
+            The brutalist aesthetic on screen is a simplified, sometimes even
+            crude appearance of pages. People often mention this image: "imagine
+            a bare HTML site with blue links and monospaced black text on a
+            white background." This is exactly what early 90s sites looked like.
+          </p>
+        </div>
+      </div>
+
+      <div class="section section-2">
+        <h2>Web Brutalism</h2>
+        <span class="scatter-text" style="left: 30px; top: -40px"
+          >REBELLION</span
+        >
+
+        <p>
+          Emerging around the mid-2010s, web brutalism took shape as a protest
+          against overly smooth and template web design. Designer Pascal Deville
+          launched
+          <a href="https://brutalistwebsites.com" target="_blank"
+            >BrutalistWebsites.com</a
+          >
+          in 2014, where he collected examples of such sites.
+        </p>
+
+        <p>
+          <strong>The main task of a brutal site</strong> is to make the
+          interface as simple and understandable as possible, "without visual
+          excesses: no rounding, no variegation, no unnecessary design."
+        </p>
+
+        <p>
+          <u>Don't confuse web brutalism with classical minimalism.</u> Although
+          both styles avoid embellishment, brutalism has a different vibe.
+          Distinctive features look deliberately provocative:
+        </p>
+
+        <ul>
+          <li data-num="1">
+            Sharp, "toxic" colors (screaming blue, red, acid green) in large
+            blocks and headings
+          </li>
+          <li data-num="2">
+            Pure "raw" background — most often white or black, without gradients
+          </li>
+          <li data-num="3">Absence of complex graphics and processed images</li>
+          <li data-num="4">
+            Widespread use of one simple font, often monospaced
+          </li>
+          <li data-num="5">
+            Complete absence of animation and special effects
+          </li>
+          <li data-num="6">
+            Intentional violations in the grid and content hierarchy
+          </li>
+        </ul>
+
+        <div class="types-container">
+          <div class="type-box">
+            <h3>L'Internet Brut</h3>
+            <p>
+              The first type — "raw internet" — is closest to the ideas of
+              architectural brutalism. Sites of this type almost completely shed
+              decorative ballast: white background, blue links, black text,
+              minimum CSS. Example? <em>Wikipedia</em>.
+            </p>
+          </div>
+          <div class="type-box">
+            <h3>L'Internet Fou</h3>
+            <p>
+              The second type — "crazy internet" — is the most controversial
+              manifestation. Such sites are deliberately complicated and
+              chaotic: bright neon colors, rough shapes, strange cursors,
+              meaningless animations, complete absence of the usual hierarchy.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section section-3">
+        <h2>Neo-Brutalism</h2>
+        <span class="scatter-text" style="right: 40px; top: -20px">HYBRID</span>
+
+        <p>
+          If web brutalism is a rebellion against excessive aestheticization,
+          then neo-brutalism can be called an attempt to reconcile the
+          rebellious spirit with modern design standards. This style emerged in
+          the 2020s as a kind of compromise.
+        </p>
+
+        <p>
+          Essentially,
+          <strong
+            >neo-brutalism is a hybrid of minimalism and brutalism.</strong
+          >
+          It takes the best from minimalism (clean grid, orderliness,
+          functionality) and mixes it with what attracted in brutalism (freedom
+          of expression, audacity, brightness).
+        </p>
+
+        <div class="highlight-box">
+          <p>
+            Key features: <strong>Large, bold typography.</strong> High contrast
+            and clear boundaries. Bright "conflicting" colors. Simplicity of
+            forms and deliberate imperfection. Despite the riot of color,
+            neo-brutalist design often uses elements in their original,
+            "cut-down" form.
+          </p>
+        </div>
+      </div>
+
+      <div class="section section-4">
+        <h2>Anti-Design</h2>
+        <span class="scatter-text" style="left: 20px; top: -35px">CHAOS</span>
+
+        <p>
+          Anti-design as a concept arose not in the digital age — its roots go
+          back to the 1960s. In Italy, a group of young designers rebelled
+          against the dominant modernism that asserted "form follows function."
+          These radicals believed design had become too serious, utilitarian,
+          and connected to consumer culture.
+        </p>
+
+        <p>
+          <strong>The philosophy of anti-design</strong> originally consisted of
+          denying functionalism for the sake of artistic statement. To destroy
+          habitual ideas about an object, anti-designers used
+          <em
+            >kitsch, absurd forms, distorted proportions, screaming colors.</em
+          >
+        </p>
+
+        <div class="highlight-box">
+          <p>
+            In web design, anti-design manifested as an extension of extreme web
+            brutalism. When some designers said "let's make sites simpler,"
+            others went further and said
+            <strong>"let's deliberately make it bad."</strong> The result was a
+            paradox: creating design that contradicts generally accepted design
+            norms.
+          </p>
+        </div>
+
+        <p>
+          <u>Important:</u> anti-design on the web is not just an ugly
+          interface, but a
+          <strong
+            >conscious violation of UX canons with an artistic or social
+            idea.</strong
+          >
+        </p>
+
+        <p>What distinguishes anti-design?</p>
+
+        <ul>
+          <li data-num="→">
+            Complete ignorance of user habit. An anti-design site breaks
+            perception patterns: familiar navigation may be absent, the logic of
+            element placement is chaotic
+          </li>
+          <li data-num="×">
+            Deliberately bad aesthetics. Here "ugliness" is cultivated as a
+            style: the designer specifically chooses tasteless color
+            combinations
+          </li>
+          <li data-num="!">
+            Deliberate complication of interaction. While good UX seeks to
+            simplify, anti-design does the opposite: inserts obstacles to touch
+            emotions
+          </li>
+          <li data-num="?">
+            Irony and provocation. Almost always anti-design projects contain a
+            share of humor. This is design with a wink
+          </li>
+        </ul>
+      </div>
+
+      <div class="manifesto">
+        <h3>The 5 Key Principles</h3>
+
+        <p>
+          <strong>1.</strong> Break rules consciously. Forget about grids,
+          guidelines and order — chaos is your best friend. Don't be afraid to
+          do it "wrong" — in anti-design there's no wrong except boredom.
+        </p>
+
+        <p>
+          <strong>2.</strong> Aestheticize ugliness. Turn the ugly into style:
+          combine the most toxic colors, mix fonts of all calibers, use outdated
+          effects. What an ordinary designer would consider a nightmare is a
+          find for you.
+        </p>
+
+        <p>
+          <strong>3.</strong> Put emotion above convenience. The goal of
+          anti-design is to evoke a reaction, be it laughter, surprise, or even
+          indignation. Shock is your tool.
+        </p>
+
+        <p>
+          <strong>4.</strong> Ironize and play. Anti-design without humor is
+          dead. Put a dose of self-irony into your crazy decisions. Let
+          knowledgeable people read: you're not an incompetent dilettante, but a
+          cunning provocateur.
+        </p>
+
+        <p>
+          <strong>5.</strong> Know the measure of rebellion. Not every project
+          can withstand such an approach. If you're making a site not for
+          creative experiment, but for a real audience — think twice.
+        </p>
+      </div>
+
+      <!-- PERCEPTION FUNCTION SECTION -->
+
+      <div class="section perception-section">
+        <h2>Perception Function F</h2>
+        <span class="scatter-text" style="right: 10px; top: -35px">F(x)</span>
+
+        <p>
+          Design is a point in a huge space of options. We can pretend the brain
+          evaluates each point with a rough function <strong>F</strong> — a mix
+          of usability, novelty, emotion, clarity and irony.
+        </p>
+
+        <div class="perception-math">
+          <code
+            >F = w<sub>u</sub>·usability + w<sub>n</sub>·novelty +
+            w<sub>e</sub>·emotion + w<sub>c</sub>·clarity +
+            w<sub>i</sub>·irony/tension</code
+          >
+        </div>
+
+        <p>
+          Classic product design pushes <strong>F</strong> by letting usability
+          and clarity dominate. Anti-design tweaks the weights: it willingly
+          burns a part of usability to boost novelty, emotion and tension.
+        </p>
+
+        <div class="perception-grid">
+          <div></div>
+          <div class="perception-col-title">classic design</div>
+          <div class="perception-col-title">anti-design</div>
+
+          <div class="perception-metric-name">USABILITY</div>
+          <div class="bar">
+            <div class="bar-fill classic" style="width: 94%"></div>
+          </div>
+          <div class="bar">
+            <div class="bar-fill anti" style="width: 42%"></div>
+          </div>
+
+          <div class="perception-metric-name">CLARITY</div>
+          <div class="bar">
+            <div class="bar-fill classic" style="width: 90%"></div>
+          </div>
+          <div class="bar">
+            <div class="bar-fill anti" style="width: 48%"></div>
+          </div>
+
+          <div class="perception-metric-name">NOVELTY</div>
+          <div class="bar">
+            <div class="bar-fill classic" style="width: 38%"></div>
+          </div>
+          <div class="bar">
+            <div class="bar-fill anti" style="width: 92%"></div>
+          </div>
+
+          <div class="perception-metric-name">EMOTION</div>
+          <div class="bar">
+            <div class="bar-fill classic" style="width: 46%"></div>
+          </div>
+          <div class="bar">
+            <div class="bar-fill anti" style="width: 88%"></div>
+          </div>
+
+          <div class="perception-metric-name">IRONY / TENSION</div>
+          <div class="bar">
+            <div class="bar-fill classic" style="width: 18%"></div>
+          </div>
+          <div class="bar">
+            <div class="bar-fill anti" style="width: 94%"></div>
+          </div>
+        </div>
+
+        <p class="perception-note">
+          this is not real math. but the brain kind of computes it anyway.
+        </p>
+      </div>
+
+      <!-- 5 UNWRITTEN RULES SECTION -->
+
+      <div class="rules-section">
+        <h2>5 Unwritten Rules</h2>
+        <span class="scatter-text" style="left: 10px; top: -30px"
+          >DO NOT KILL IT</span
+        >
+
+        <p class="rules-intro">
+          Even the loudest anti-design lives inside a frame. Cross these lines
+          and the whole thing stops being a deliberate statement and collapses
+          into pure noise.
+        </p>
+
+        <ol class="rules-list">
+          <li>
+            <span class="rule-label">Keep the core readable.</span>
+            <span class="rule-text">
+              The main message, call to action or navigation has to survive the
+              chaos. If the user literally cannot find what the thing is about,
+              there is no subversion — only entropy.
+            </span>
+          </li>
+          <li>
+            <span class="rule-label">Make chaos consistent.</span>
+            <span class="rule-text">
+              Choose one type of “wrongness” and repeat it: same kind of broken
+              grid, same kind of ugly color, same kind of type abuse. Random,
+              unstyled mistakes feel like incompetence, not a stance.
+            </span>
+          </li>
+          <li>
+            <span class="rule-label">Keep a macro-structure.</span>
+            <span class="rule-text">
+              Sections, flows, beginnings and endings must still exist. The user
+              can feel lost inside a section, but they should not feel lost in
+              the entire universe. We <strong>SHOULD</strong> break the banner
+              blindness, but we <strong>MUST</strong> not break the flow, that's
+              the point.
+            </span>
+          </li>
+          <li>
+            <span class="rule-label">Have a concept, not just ugliness.</span>
+            <span class="rule-text">
+              <i>"We made it ugly because lol"</i> dies fast. There has to be a
+              story: parodying perfect UX, quoting early web, echoing a
+              subculture or critiquing something outside the screen, or simply
+              showing your vision, the story you want to tell.
+            </span>
+          </li>
+          <li>
+            <span class="rule-label">Respect time and bodies.</span>
+            <span class="rule-text">
+              This rule mostly comes from brutalism. Do not make interactions
+              physically impossible or harmful. No seizure-level flickering, no
+              unreadable microcopy for critical actions, no puzzles where a
+              simple click would do.
+            </span>
+          </li>
+        </ol>
+      </div>
+
+      <div class="examples-section">
+        <h2>Examples</h2>
+
+        <h3>Web Brutalism:</h3>
+
+        <div class="site-example">
+          <p>
+            <strong
+              ><a href="https://brutalistwebsites.com" target="_blank"
+                >BrutalistWebsites.com</a
+              ></strong
+            >
+            — an entire collection of brutalist sites. The motto says:
+            "Brutalism can be seen as a reaction by a younger generation to the
+            lightness and optimism of today's web design."
+          </p>
+        </div>
+
+        <div class="site-example">
+          <p>
+            <strong
+              ><a href="https://wikipedia.org" target="_blank"
+                >Wikipedia</a
+              ></strong
+            >
+            — surprisingly, Wikipedia can be called a brutalist site. Its
+            interface is extremely simple and functional: the main thing is
+            content, design is secondary.
+          </p>
+        </div>
+
+        <div class="site-example">
+          <p>
+            <strong
+              ><a href="https://craigslist.org" target="_blank"
+                >Craigslist</a
+              ></strong
+            >
+            — one of the most famous examples of old web design, cited as a
+            prototype of web brutalism. Its appearance has hardly changed since
+            the 1990s.
+          </p>
+        </div>
+
+        <h3>Anti-Design:</h3>
+
+        <div class="site-example">
+          <p>
+            <strong>Bloomberg Businessweek Design 2016</strong> — the first
+            virally famous anti-design project. The creators deliberately made
+            it chaotic: moving objects, distracting animation, confusing
+            inscriptions. Users were shocked but the site attracted massive
+            attention.
+          </p>
+        </div>
+
+        <div class="site-example">
+          <p>
+            <strong
+              ><a href="https://weatherishappening.com" target="_blank"
+                >Weather Is Happening</a
+              ></strong
+            >
+            — complete absurdity: the page shimmers with acid colors, text is
+            written in mixed case, meaningless words like "WAIT" and "WAT" pop
+            up everywhere.
+          </p>
+        </div>
+
+        <div class="site-example">
+          <p>
+            <strong>Yale School of Art</strong> (old site) — famous for its
+            deliberately awkward design. Students designed it as anti-art:
+            unaligned text blocks, chaotic colors, strange backgrounds.
+          </p>
+        </div>
+      </div>
+
+      <blockquote>
+        HOW TO ANTI-DESIGN THINGS is not a call to make all sites ugly, but an
+        invitation to look at design from a different angle.
+      </blockquote>
+
+      <div class="conclusion-text">
+        <p>
+          Brutalism, web brutalism, neo-brutalism and anti-design arose as a
+          reaction to satiety with the ideal of beauty and convenience. They
+          return to creativity a share of risk, experiment and living protest
+          spirit.
+        </p>
+
+        <p>
+          <strong>The main thing these movements remind us:</strong> design is
+          not dogma, but a game of imagination. Sometimes, to find something
+          new, you need to destroy the old (even jokingly).
+        </p>
+
+        <p>
+          <em
+            >As the radicals of the 60s said, "everything correct sooner or
+            later becomes boring." And that means there will always be room for
+            new brutalists and anti-designers who will remind us:
+            <u>rules exist to be broken.</u></em
+          >
+        </p>
+      </div>
+
+      <div class="footer-statement">
+        be brutalist<br />
+        make the web<br />
+        interesting again
+      </div>
+      <p>voropaew.ru</p>
+    </div>
+  </body>
+</html>
