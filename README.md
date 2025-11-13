@@ -2,4 +2,4 @@
 
 my very personal website in brutalism style
 
-check it out on [voropaew.ru](voropaew.ru)
+check it out on [voropaew.ru](https://voropaew.ru)
