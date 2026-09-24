@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>cv — voropaew</title>
+
+    <!-- /cv → cv.pdf (GitHub Pages can't do server-side redirects) -->
+    <script>
+      location.replace("cv.pdf");
+    </script>
+    <meta http-equiv="refresh" content="0; url=cv.pdf" />
+
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
+        color: #000;
+        font-family: "Noto Sans", system-ui, -apple-system, Segoe UI, Roboto,
+          Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      a {
+        font-size: 32px;
+        color: inherit;
+        text-underline-offset: 6px;
+      }
+      @media (min-width: 768px) {
+        a {
+          font-size: 48px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="cv.pdf">open cv</a>
+  </body>
+</html>
